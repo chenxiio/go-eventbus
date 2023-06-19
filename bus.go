@@ -2,6 +2,7 @@ package eventbus
 
 import (
 	"reflect"
+	"strings"
 	"sync"
 )
 
@@ -100,14 +101,19 @@ func (b *Bus[T]) getEvents(topic string) []*event[T] {
 	defer b.mux.Unlock()
 
 	events := make([]*event[T], 0, len(b.events[topic])+len(b.events[ALL]))
-	for _, e := range b.events[topic] {
-		if e.isUnique {
-			if e.hasCalled {
-				continue
+
+	for k, v := range b.events {
+		if strings.HasPrefix(topic, k) {
+			for _, e := range v {
+				if e.isUnique {
+					if e.hasCalled {
+						continue
+					}
+					e.hasCalled = true
+				}
+				events = append(events, e)
 			}
-			e.hasCalled = true
 		}
-		events = append(events, e)
 	}
 
 	if topic != ALL {

@@ -58,7 +58,7 @@ func TestOnAll(t *testing.T) {
 
 	o.On(ALL, onAll)
 
-	o.Trigger("foo", "foo").Trigger("bar", "bar")
+	o.Trigger("foo", "foo").Trigger("bar1", "bar1").Trigger("bar", "bar")
 
 	o.Off(ALL, onAll)
 
