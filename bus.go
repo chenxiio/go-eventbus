@@ -47,7 +47,7 @@ func (b *Bus[T]) Clean() *Bus[T] {
 
 // Trigger - dispatch event
 func (b *Bus[T]) Trigger(topic string, msg ...T) *Bus[T] {
-	b.dispatch(topic, msg)
+	go b.dispatch(topic, msg)
 	return b
 }
 

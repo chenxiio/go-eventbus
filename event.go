@@ -9,6 +9,7 @@ const ALL = "*"
 
 // Event interface
 type Event[T any] interface {
+	//注意阻塞问题
 	Dispatch(data ...T)
 }
 
